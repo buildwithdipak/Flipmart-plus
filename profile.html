@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile • FlipMart+</title>
+  <style>
+    :root{
+      --primary:#4f46e5;
+      --primary-dark:#3730a3;
+      --accent:#7c3aed;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --success:#059669;
+      --shadow:0 12px 35px rgba(17,24,39,.08);
+      --radius:20px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at top left,rgba(79,70,229,.10),transparent 28%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{text-decoration:none;color:inherit}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+
+    .topbar{
+      background:rgba(255,255,255,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(229,231,235,.8);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .header-top{
+      width:min(1100px,92%);
+      min-height:72px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      font-size:25px;
+      font-weight:850;
+      letter-spacing:-.8px;
+    }
+
+    .accent{color:var(--primary)}
+    .controls{display:flex;align-items:center;gap:10px}
+
+    .profileBtn,.muted{
+      border:1px solid var(--border);
+      background:#fff;
+      color:#374151;
+      padding:10px 15px;
+      border-radius:11px;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .profileBtn:hover,.muted:hover{
+      border-color:#c7d2fe;
+      background:#f8faff;
+      transform:translateY(-1px);
+    }
+
+    .muted{color:#dc2626}
+
+    .profile-shell{
+      width:min(1100px,92%);
+      margin:42px auto 55px;
+    }
+
+    .page-heading{margin-bottom:25px}
+    .eyebrow{
+      color:var(--primary);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      margin-bottom:7px;
+    }
+    .page-heading h1{
+      font-size:34px;
+      letter-spacing:-1px;
+      line-height:1.15;
+    }
+    .page-heading p{color:var(--muted);margin-top:8px}
+
+    .profile-cardx{
+      position:relative;
+      overflow:hidden;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:30px;
+      margin-bottom:20px;
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:25px;
+      align-items:center;
+    }
+
+    .profile-cardx:before{
+      content:"";
+      position:absolute;
+      width:250px;
+      height:250px;
+      border-radius:50%;
+      background:rgba(99,102,241,.07);
+      right:-80px;
+      top:-120px;
+    }
+
+    .avatar-wrap{position:relative;z-index:1}
+    .profile-cardx img{
+      width:120px;
+      height:120px;
+      border-radius:24px;
+      object-fit:cover;
+      border:4px solid #fff;
+      box-shadow:0 8px 25px rgba(79,70,229,.2);
+      background:#eef2ff;
+    }
+
+    .profile-info{position:relative;z-index:1}
+    .profile-info h2{
+      font-size:26px;
+      letter-spacing:-.5px;
+      margin-bottom:9px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:6px 11px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:var(--primary-dark);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+
+    .chip:before{
+      content:"";
+      width:7px;height:7px;border-radius:50%;
+      background:var(--success);
+    }
+
+    .contact-line{
+      color:var(--muted);
+      font-size:14px;
+      margin:5px 0;
+    }
+
+    .profile-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:17px;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background:#fff;
+      color:#374151;
+      padding:10px 15px;
+      border-radius:10px;
+      font-weight:750;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      border-color:#c7d2fe;
+      color:var(--primary);
+      transform:translateY(-1px);
+    }
+
+    .section{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:25px;
+      margin-bottom:20px;
+    }
+
+    .section-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:15px;
+    }
+
+    .section h3{font-size:18px;letter-spacing:-.2px}
+    .section-subtitle{font-size:13px;color:var(--muted);margin-top:5px}
+
+    .address-box{
+      padding:15px 17px;
+      background:#f8fafc;
+      border:1px solid #edf0f4;
+      border-radius:13px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .list li{
+      padding:13px 14px;
+      background:#f8fafc;
+      border:1px solid #edf0f4;
+      border-radius:12px;
+      color:#374151;
+      font-size:14px;
+    }
+
+    .empty{color:var(--muted)!important}
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+      margin-top:18px;
+    }
+
+    .field{display:grid;gap:7px}
+    .field.full{grid-column:1/-1}
+    label{
+      font-size:13px;
+      font-weight:750;
+      color:#374151;
+    }
+
+    input,textarea{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      outline:none;
+      background:#fff;
+      color:var(--text);
+      transition:.2s;
+    }
+
+    input:focus,textarea:focus{
+      border-color:#818cf8;
+      box-shadow:0 0 0 4px rgba(99,102,241,.10);
+    }
+
+    textarea{min-height:105px;resize:vertical}
+
+    .primary{
+      border:0;
+      border-radius:11px;
+      padding:12px 18px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      font-weight:800;
+      box-shadow:0 8px 18px rgba(79,70,229,.2);
+      transition:.2s;
+    }
+
+    .primary:hover{
+      transform:translateY(-1px);
+      box-shadow:0 11px 22px rgba(79,70,229,.27);
+    }
+
+    .form-submit{grid-column:1/-1;display:flex;justify-content:flex-end}
+
+    .site-footer{
+      border-top:1px solid var(--border);
+      background:#fff;
+      padding:22px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media(max-width:700px){
+      .header-top{min-height:64px}
+      .profile-shell{margin-top:28px}
+      .page-heading h1{font-size:28px}
+      .profile-cardx{grid-template-columns:1fr;text-align:center;padding:24px}
+      .avatar-wrap{margin:auto}
+      .profile-actions{justify-content:center}
+      .row,.form-grid{grid-template-columns:1fr}
+      .field.full,.form-submit{grid-column:auto}
+      .form-submit{justify-content:stretch}
+      .form-submit .primary{width:100%}
+    }
+
+    @media(max-width:450px){
+      .brand{font-size:21px}
+      .profileBtn,.muted{padding:8px 10px;font-size:12px}
+      .controls{gap:6px}
+      .section{padding:19px}
+      .profile-cardx img{width:105px;height:105px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="header-top">
+      <a href="index.html" class="brand">Flip<span class="accent">Mart+</span></a>
+      <div class="controls">
+        <a href="index.html" class="profileBtn">⌂ Home</a>
+        <button id="logoutBtn" class="muted">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="profile-shell">
+    <div class="page-heading">
+      <div class="eyebrow">Account Center</div>
+      <h1>My Profile</h1>
+      <p>Manage your personal details, address, orders and saved items.</p>
+    </div>
+
+    <div class="profile-cardx">
+      <div class="avatar-wrap">
+        <img id="avatar" src="https://source.unsplash.com/120x120/?portrait" alt="User avatar">
+      </div>
+
+      <div class="profile-info">
+        <h2 id="userName">Guest User</h2>
+        <div class="chip">Prime+ Member</div>
+        <p id="userEmail" class="contact-line">guest@example.com</p>
+        <p id="userPhone" class="contact-line">+91 •••••• ••••</p>
+
+        <div class="profile-actions">
+          <button id="editProfile" class="btn">Edit Profile</button>
+          <button id="manageAddr" class="btn">Manage Address</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <h3>Default Address</h3>
+          <p class="section-subtitle">Your primary shipping address</p>
+        </div>
+      </div>
+      <div class="address-box" id="userAddress">No address yet.</div>
+    </div>
+
+    <div class="row">
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <h3>Recent Orders</h3>
+            <p class="section-subtitle">Your latest order activity</p>
+          </div>
+        </div>
+        <ul id="recentOrders" class="list">
+          <li class="empty">No orders yet.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div>
+            <h3>Saved Items</h3>
+            <p class="section-subtitle">Products you've saved for later</p>
+          </div>
+        </div>
+        <ul id="savedItems" class="list">
+          <li class="empty">Nothing saved.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div>
+          <h3>Account Details</h3>
+          <p class="section-subtitle">Update your personal and shipping information</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="form-grid">
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email address" required>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="field full">
+          <label for="address">Shipping Address</label>
+          <textarea id="address" placeholder="Enter your complete shipping address" required></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button class="primary" type="submit">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">© 2026 FlipMart+ • All rights reserved.</div>
+  </footer>
+
+  <script src="script2.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const userData = JSON.parse(localStorage.getItem('user'));
+    const wishlist = JSON.parse(localStorage.getItem('fk_wishlist_v1') || '[]');
+    if (userData){
+      document.getElementById('userName').textContent = userData.name;
+      document.getElementById('userEmail').textContent = userData.email;
+      document.getElementById('userPhone').textContent = userData.phone;
+      document.getElementById('userAddress').textContent = userData.address;
+    }
+    document.getElementById('recentOrders').innerHTML = '<li>Demo order • Delivered ✔️</li><li>Demo order • Out for delivery 🚚</li>';
+    if (wishlist.length){
+      document.getElementById('savedItems').innerHTML = wishlist.map(id => {
+        const p = PRODUCTS.find(x => x.id === id);
+        return p ? `<li>${p.title} — ₹${p.price}</li>` : '';
+      }).join('');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const user = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      alert('✅ Profile saved');
+      location.reload();
+    });
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{
+      localStorage.removeItem('user');
+      alert('Logged out');
+      location.reload();
+    });
+  </script>
+</body>
+
+</body>
+</html>
